@@ -8,6 +8,7 @@ django = "*"
 numpy = "*"
 tensorflow = "*"
 gdown = "*"
+pillow = "*"
 
 [dev-packages]
 

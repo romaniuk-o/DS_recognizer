@@ -1,12 +1,14 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
-
-
 class Image(models.Model):
-    user_id = models.IntegerField(null=False)
-    image_id = models.CharField(max_length=35, null=True)
-    image_class = models.CharField(max_length=10, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 class Model(models.Model):
