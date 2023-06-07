@@ -66,18 +66,26 @@ borders: top right bottom left !important; border-color: #e0e5eb !important; bor
     </section>
 
 
-  <main>
-        <section>
-            <h2>Завантажте зображення</h2>
-            <input type="file" id="imageInput">
-            <button id="analyzeButton">Аналізувати</button>
-        </section>
+<main>
+  <form method="post" action="/analyze/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Завантажте зображення</h2>
+    <input type="file" name="image">
+    <button type="submit">Аналізувати</button>
+  </form>
 
-        <section id="resultSection">
-            <h2>Результат</h2>
-            <div id="resultContainer"></div>
-        </section>
-    </main>
+  <div id="resultSection">
+    <h2>Результат: {{ image_class }} {{ confidence }}% </h2>
+    <div id="resultContainer">
+      {% if image_url %}
+        <img src="{{ image_url }}" alt="Uploaded Image">
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+
+
 
 
 
