@@ -1,3 +1,5 @@
+
+
 {% load static %}
 {% load static %}
 <!DOCTYPE html>
@@ -6,9 +8,9 @@
     <meta charset="utf-8">
     <meta name="keywords" content="​Digital product marketing agency, ​Make your marketing more effective, ​Convert more customers and grow more revenue now, 560k, 79%, 80%, 1340, ​Why you need digital marketing, ​Get Free SEO Analysis?, ​Got New Project?, Read what our customers say">
     <meta name="description" content="">
-    <title>Страница 1</title>
+    <title>Login</title>
     <link rel="stylesheet" href="{% static 'css/nicepage.css' %}" media="screen">
-<link rel="stylesheet" href="{% static 'css/Страница-1.css' %}" media="screen">
+<link rel="stylesheet" href="{% static 'css/login.css' %}" media="screen">
     <script class="u-script" type="text/javascript" src="{% static 'js/jquery.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'js/nicepage.js' %}" defer=""></script>
 <!--    <script>-->
@@ -46,8 +48,7 @@ borders: top right bottom left !important; border-color: #e0e5eb !important; bor
             <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
               <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
-</symbol>
-</defs></svg>
+                </symbol></defs></svg>
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
@@ -60,12 +61,10 @@ borders: top right bottom left !important; border-color: #e0e5eb !important; bor
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-sidenav-overflow">
                 <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-
-                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a></li>
-                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>
-                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>
-                </ul>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a>
+</li></ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
@@ -77,26 +76,30 @@ borders: top right bottom left !important; border-color: #e0e5eb !important; bor
         <main style="position: relative;">
             <div style="display: flex; justify-content: flex-end; align-items: flex-start; position: relative; z-index: 2; margin-top: 20px;">
                 <div style="order: 1; ">
-                    <form method="post" action="/analyze/" enctype="multipart/form-data" style="padding: 20px; background-color: rgba(255, 255, 255, 0); border: 2px solid white; border-radius: 20px;">
-                        {% csrf_token %}
-                        <h2 style="color: white; text-align: center;">Upload new image</h2>
-                        <input type="file" name="image" id="fileInput" style="margin-bottom: 10px; border: 2px solid white; border-radius: 10px; color: white;">
-                        <button type="submit" style="background-color: transparent; color: white; border: 2px solid white; padding: 5px 16px; cursor: pointer; border-radius: 10px;">Predict</button>
-                    </form>
-                    <div style="order: 2;">
-                    <div id="resultSection">
-                        <h2 style="color: white;">{% if image_class %} Prediction: {{ image_class }} {{ confidence }} {% endif %}</h2>
-                        <div id="resultContainer">
-                            {% if image_url %}
-                            <img src="{{ image_url }}" alt="Uploaded Image" style="max-width: 299px; max-height: 299px;">
-                            {% endif %}
-                        </div>
+                    <div class="container">
+                        <h2>Login</h2>
+                        {% if error_message %}
+                            <p class="error-message">{{ error_message }}</p>
+                        {% endif %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Login">
+                            </div>
+                        </form>
                     </div>
                 </div>
-                </div>
-
             </div>
-            <img src="background.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: 1;">
+
+<!--            <img src="background.jpg" alt="Background Image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: 1;">-->
         </main>
     </div>
 </section>
@@ -115,34 +118,6 @@ borders: top right bottom left !important; border-color: #e0e5eb !important; bor
 
 
 
-
-
-<section class="u-align-center u-clearfix u-palette-5-light-2 u-section-2" id="sec-0436">
-  <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-    <h2 class="u-text u-text-default u-text-1">Your images</h2>
-    <div class="u-expanded-width u-gallery u-layout-grid u-lightbox u-show-text-on-hover u-gallery-1">
-      <div class="u-gallery-inner u-gallery-inner-1">
-        {% for image in images %}
-          {% if forloop.counter <= 9 %}
-            <div class="u-effect-fade u-gallery-item">
-              <div>
-                <img class="u-back-image u-expanded" src="{{ image.image.url }}" alt="{{ image.title }}" onclick="analyze_image('{{ image.id }}')">
-              </div>
-            </div>
-          {% endif %}
-        {% empty %}
-          <p>No images found.</p>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-function analyze_image(imageId) {
-  window.location.href = '/analyze/' + imageId + '/';
-}
-</script>
 
 
 
