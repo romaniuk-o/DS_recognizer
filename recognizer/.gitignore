@@ -132,3 +132,6 @@ bestproject/.idea/
 bestproject/dataproject/model
 hw
 ../ourproject
+
+media
+recognizer_app/src/Xception_tuned.h5
