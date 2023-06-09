@@ -9,13 +9,14 @@ from django.conf import settings
 import numpy as np
 from .models import Image as ImageModel
 from django.core.exceptions import ObjectDoesNotExist
+import tensorflow as tf
+from tensorflow.keras.models import load_model
 
 # Create your views here.
 def main(request):
     return render(request, 'recognizer_app/index.html', {})
 
-import tensorflow as tf
-from tensorflow.keras.models import load_model
+
 
 
 # Global variable to store the loaded model
