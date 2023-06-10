@@ -11,8 +11,8 @@ from django.conf import settings
 import numpy as np
 from .models import Image as ImageModel
 from django.core.exceptions import ObjectDoesNotExist
-import tensorflow as tf
-from tensorflow.keras.models import load_model
+# import tensorflow as tf
+# from tensorflow.keras.models import load_model
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
 from django.contrib import messages
@@ -32,6 +32,7 @@ def main(request):
 loaded_model = None
 
 def load_custom_model():
+    return 0
     global loaded_model
     if loaded_model is None:
         print('Loading the model ... ')
@@ -47,6 +48,7 @@ load_custom_model()
 
 
 def classify(image=None):
+    return " uncomment view to  classify", " 0%"
     if not image:
         return None
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
