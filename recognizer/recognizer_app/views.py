@@ -1,4 +1,6 @@
 import os
+import io
+
 from pathlib import Path
 from PIL import Image
 from django.shortcuts import render, redirect
@@ -11,6 +13,13 @@ from .models import Image as ImageModel
 from django.core.exceptions import ObjectDoesNotExist
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from django.contrib.auth import authenticate, login
+from .forms import SignUpForm
+from django.contrib import messages
+from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
 
 # Create your views here.
 def main(request):
@@ -40,7 +49,7 @@ load_custom_model()
 def classify(image=None):
     if not image:
         return None
-    class_labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+    class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
 
     img = image.convert('RGB')
     img = img.resize((32, 32))
@@ -52,9 +61,9 @@ def classify(image=None):
     predictions = np.exp(clean_predictions) / np.sum(np.exp(clean_predictions))
 
 
-    print(clean_predictions)
-    print(predictions)
-    print(sigmoid_predictions)
+    # print(clean_predictions)
+    # print(predictions)
+    # print(sigmoid_predictions)
     prediction_label = np.argmax(predictions)
     # prediction = tf.nn.softmax(prediction)
     percentage = str(int(predictions[0][prediction_label] * 10000) / 100.0)
@@ -62,7 +71,23 @@ def classify(image=None):
     # return 'bird'
 
 
+@login_required  # Requires the user to be authenticated
 def analyze_view(request, image_id=-1):
+
+    if not request.user.is_authenticated:
+        # Redirect or return an appropriate response for unauthorized users
+        return HttpResponseForbidden()
+
+    # try:
+    #     image = ImageModel.objects.get(id=image_id)
+    # except ImageModel.DoesNotExist:
+    #     # Handle the case when the image doesn't exist
+    #     return redirect('/analyze/')
+    #
+    # if image.user != request.user:
+    #     # Return a forbidden response if the image doesn't belong to the user
+    #     return HttpResponseForbidden()
+
     user_images = ImageModel.objects.filter(user=request.user).order_by('-last_viewed')
     image_url = None
     image_class = None
@@ -76,49 +101,15 @@ def analyze_view(request, image_id=-1):
         image_class, confidence = classify(Image.open(image_path))
     except ObjectDoesNotExist as err:
         pass
-        # image_class, confidence = 'airplane', '99.99'
-        # image_url = base_image_url
+
 
     if request.method == 'POST':
         form = AnalyzeForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.cleaned_data['image']
-
-            # Open the image using PIL
-            img = Image.open(image)
-
-            max_width = 244
-            max_height = 244
-            # Check if the image is larger than 32x32
-            if img.width > max_width or img.height > max_height:
-                # Calculate the new dimensions while maintaining aspect ratio
-                aspect_ratio = img.width / img.height
-                if img.width > img.height:
-                    new_width = max_width
-                    new_height = int(new_width / aspect_ratio)
-                else:
-                    new_height = max_height
-                    new_width = int(new_height * aspect_ratio)
-
-                img = img.resize((new_width, new_height), Image.LANCZOS)
-
-            # Generate the image path to save the resized image
-            image_path = os.path.join(settings.MEDIA_ROOT, image.name)
-            img.save(image_path)
-
             new_image = ImageModel(user=request.user, image=image, title=image.name)
             new_image.save()
-
-            # Generate the image URL to be used in the template
-            image_url = os.path.join(settings.MEDIA_URL, image.name)
-
-            image_class, confidence = classify(img)
-
-            return render(request, 'recognizer_app/index.html', {'image_url': image_url,
-                                                                 'image_class': image_class,
-                                                                 'confidence': confidence,
-                                                                 'images': user_images,
-                                                                 })
+            return redirect(f'/analyze/{new_image.id}/')
     else:
         form = AnalyzeForm()
 
@@ -129,17 +120,54 @@ def analyze_view(request, image_id=-1):
                                                          })
 
 
+
+
+
+
+@login_required  # Requires the user to be authenticated
 def analyze_view_by_id(request, image_id):
-    # Retrieve the image object based on the image ID
     try:
         image = ImageModel.objects.get(id=image_id)
-    except Exception:
-        # Handle the case when any exception occurs
+    except ImageModel.DoesNotExist:
         return redirect('/analyze/')
-
-    # Perform your analysis or any other operations based on the image
-    # ...
-
-    # Return the response or render a template with the analysis results
-    # return render(request, 'analysis_results.html', {'image': image})
+    if image.user != request.user:
+        # return HttpResponseForbidden()
+        return redirect('/analyze/')
     return analyze_view(request, image_id=image_id)
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/analyze/')  # replace 'home' with your desired landing page
+        else:
+            error_message = 'Invalid login credentials'
+            return render(request, 'recognizer_app/login.html', {'error_message': error_message})
+    else:
+        return render(request, 'recognizer_app/login.html')
+        # return render(request, 'login.html')
+
+
+def signup_view(request):
+
+    # uncomment this in final version
+    # if request.user.is_authenticated:
+    #     return redirect('/')
+
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your account has been created! You are now able to log in!')
+            print("Form is valid")
+            return redirect('/login/')
+        else:
+            print("Form is invalid")
+            print(form.errors)  # Print form errors to the console
+    else:
+        form = SignUpForm()
+    return render(request, 'recognizer_app/signup.html', {'form': form})
