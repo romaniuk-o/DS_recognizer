@@ -91,6 +91,14 @@ def analyze_view(request, image_id=-1):
     #     return HttpResponseForbidden()
 
     user_images = ImageModel.objects.filter(user=request.user).order_by('-last_viewed')
+    for i, image in enumerate(user_images):
+        if i > 8:
+            # Delete file from local storage
+            if os.path.exists(image.image.path):
+                os.remove(image.image.path)
+                image.delete()
+
+
     image_url = None
     image_class = None
     confidence = None
