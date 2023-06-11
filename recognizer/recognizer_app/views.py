@@ -13,7 +13,7 @@ from .models import Image as ImageModel
 from django.core.exceptions import ObjectDoesNotExist
 # import tensorflow as tf
 # from tensorflow.keras.models import load_model
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm
 from django.contrib import messages
 from django.core.files.base import ContentFile
@@ -161,6 +161,7 @@ def signup_view(request):
     #     return redirect('/')
 
     if request.method == 'POST':
+        error_message = []
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
@@ -170,6 +171,13 @@ def signup_view(request):
         else:
             print("Form is invalid")
             print(form.errors)  # Print form errors to the console
+            # for field in form.errors:
+            #     error_message[field] = form.errors[field].as_text()
     else:
         form = SignUpForm()
     return render(request, 'recognizer_app/signup.html', {'form': form})
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('main')
