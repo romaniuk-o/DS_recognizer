@@ -74,7 +74,8 @@
         </nav>
       </div>
     </header>
-   <section class="u-clearfix u-image u-section-1" id="sec-6d03" data-image-width="250" data-image-height="112">
+   <section class="u-clearfix u-image u-section-1" id="sec-6d03" data-image-width="250" data-image-height="112" style="height: 800px;">
+
     <div class="u-clearfix u-sheet u-sheet-1" style="float: right; margin-right: 150px;">
 
         <main style="position: relative;">
@@ -129,7 +130,12 @@
     <div id="resultSection">
         <h2 style="color: white; font-size: 25px; text-align: center;">
           {% if image_class %}
-            Prediction: <br>{{ image_class }} {{ confidence }}
+            Prediction: <br> it's a {{ image_class }} {{ confidence }}
+          {% endif %}
+        </h2>
+        <h2 style="color: white; font-size: 15px; text-align: center;">
+          {% if result_3 %}
+             Probabilities: {{ result_3 }}
           {% endif %}
         </h2>
         <div id="resultContainer" style="display: flex; justify-content: center;">

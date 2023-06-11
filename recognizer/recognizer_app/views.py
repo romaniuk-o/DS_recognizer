@@ -11,8 +11,8 @@ from django.conf import settings
 import numpy as np
 from .models import Image as ImageModel
 from django.core.exceptions import ObjectDoesNotExist
-# import tensorflow as tf
-# from tensorflow.keras.models import load_model
+import tensorflow as tf
+from tensorflow.keras.models import load_model
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm
 from django.contrib import messages
@@ -32,7 +32,7 @@ def main(request):
 loaded_model = None
 
 def load_custom_model():
-    return 0
+    # return 0
     global loaded_model
     if loaded_model is None:
         print('Loading the model ... ')
@@ -48,7 +48,7 @@ load_custom_model()
 
 
 def classify(image=None):
-    return " uncomment view to  classify", " 0%"
+    # return " uncomment view to  classify", " 0%"
     if not image:
         return None
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
@@ -61,16 +61,27 @@ def classify(image=None):
     clean_predictions = loaded_model.predict(img)
     sigmoid_predictions = 1 / (1 + np.exp(-clean_predictions))
     predictions = np.exp(clean_predictions) / np.sum(np.exp(clean_predictions))
-
-
+    predictions2 = predictions.tolist()
+    predict_3 = sorted(predictions2[0])[-5:]
+    index_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    dictionary = dict(zip(predictions2[0], index_list))
+    predict_3_index = []
+    print(predict_3_index)
+    for i in predict_3:
+        predict_3_index.append(dictionary.get(i, -1))
+    result_str = ''
+    for i in predict_3_index[::-1]:
+        result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+    # print(result_str)
     # print(clean_predictions)
     # print(predictions)
     # print(sigmoid_predictions)
     prediction_label = np.argmax(predictions)
     # prediction = tf.nn.softmax(prediction)
     percentage = str(int(predictions[0][prediction_label] * 10000) / 100.0)
-    return class_labels[prediction_label], percentage+"%"
+    return class_labels[prediction_label], result_str
     # return 'bird'
+
 
 
 @login_required  # Requires the user to be authenticated
@@ -101,14 +112,15 @@ def analyze_view(request, image_id=-1):
 
     image_url = None
     image_class = None
-    confidence = None
+    result_3 = None
 
     try:
         image = ImageModel.objects.get(id=image_id)
         image_url = image.image.url
         image_path = image.image.path
         # print(image_url)
-        image_class, confidence = classify(Image.open(image_path))
+        image_class,  result_3 = classify(Image.open(image_path))
+        # print(image_class)
     except ObjectDoesNotExist as err:
         pass
 
@@ -125,8 +137,8 @@ def analyze_view(request, image_id=-1):
 
     return render(request, 'recognizer_app/index.html', {'image_url': image_url,
                                                          'image_class': image_class,
-                                                         'confidence': confidence,
                                                          'images': user_images,
+                                                         'result_3': result_3,
                                                          })
 
 
