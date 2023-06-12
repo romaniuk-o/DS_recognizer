@@ -126,12 +126,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-bestproject/db.sqlite3
+recognizer/recognizer_app/db.sqlite3
 *.iml
-bestproject/.idea/
-bestproject/dataproject/model
+
+
 hw
 ../ourproject
-
+.idea/
 media
-recognizer_app/src/Xception_tuned.h5
+recognizer/recognizer_app/src/Xception_tuned.h5
