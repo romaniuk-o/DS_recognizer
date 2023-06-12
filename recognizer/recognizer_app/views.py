@@ -36,14 +36,14 @@ loaded_model = None
 # https://drive.google.com/file/d/1MhlLfp43zOLiLnuFzBu3x7d6fIrh7iT5/view?usp=drive_link
 
 def load_custom_model():
-    return 0
+    # return 0
     global loaded_model
     if loaded_model is None:
         print('Loading the model ... ')
-        url = 'https://drive.google.com/file/d/1MhlLfp43zOLiLnuFzBu3x7d6fIrh7iT5/view?usp=drive_link'
-        output = 'recognizer_app/src/Xception_tuned.h5'
-        gdown.download(url, output, quiet=False, fuzzy=True)
-        model_path = 'recognizer_app/src/Xception_tuned.h5'
+        #url = 'https://drive.google.com/file/d/1MhlLfp43zOLiLnuFzBu3x7d6fIrh7iT5/view?usp=drive_link'
+        #output = 'recognizer_app/src/Xception_tuned.h5'
+        #gdown.download(url, output, quiet=False, fuzzy=True)
+        model_path = '/recognizer/recognizer_app/src/Xception_tuned.h5'
         # loaded_model = load_model(model_path)
         loaded_model = tf.keras.models.load_model(model_path, compile=False)
         # Get the last layer of the model
@@ -56,7 +56,7 @@ load_custom_model()
 
 
 def classify(image=None):
-    return " uncomment view to  classify", " 0%"
+    # return "uncomment view to  classify", "0%"
     if not image:
         return None
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
@@ -79,7 +79,9 @@ def classify(image=None):
         predict_3_index.append(dictionary.get(i, -1))
     result_str = ''
     for i in predict_3_index[::-1]:
-        result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+        if predictions[0][i] > 0.05:
+            result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+    result_str = result_str[:-1]
     # print(result_str)
     # print(clean_predictions)
     # print(predictions)
