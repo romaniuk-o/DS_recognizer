@@ -36,7 +36,7 @@ loaded_model = None
 # https://drive.google.com/file/d/1MhlLfp43zOLiLnuFzBu3x7d6fIrh7iT5/view?usp=drive_link
 
 def load_custom_model():
-    # return 0
+    return 0
     global loaded_model
     if loaded_model is None:
         print('Loading the model ... ')
@@ -56,7 +56,7 @@ load_custom_model()
 
 
 def classify(image=None):
-    # return " uncomment view to  classify", " 0%"
+    return " uncomment view to  classify", " 0%"
     if not image:
         return None
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
