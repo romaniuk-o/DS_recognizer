@@ -8,6 +8,8 @@ django = "*"
 numpy = "*"
 gdown = "*"
 pillow = "*"
+tensorflow = "==2.10.1"
+keras = "==2.10.0"
 
 [dev-packages]
 
