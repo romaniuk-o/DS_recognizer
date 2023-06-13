@@ -56,6 +56,7 @@ def load_custom_model():
         loaded_model = tf.keras.models.load_model(model_path, compile=False)
         # Get the last layer of the model
         last_layer = loaded_model.layers[-1]
+        print(loaded_model)
 
         # Turn off the activation function of the last layer
         last_layer.activation = None
@@ -166,6 +167,7 @@ def analyze_view(request, image_id=-1):
     image_url = None
     # image_class = None
     result_3 = None
+    mess = None
 
     try:
         image = ImageModel.objects.get(id=image_id)
@@ -178,7 +180,9 @@ def analyze_view(request, image_id=-1):
         result_3 = classify(Image.open(image_path))
         # print(image_class)
     except ObjectDoesNotExist as err:
-        print(err)
+        mess = 'This file type is not supported. Try again.'
+        print(err, mess)
+
         pass
 
 
@@ -196,6 +200,7 @@ def analyze_view(request, image_id=-1):
                                                          # 'image_class': image_class,
                                                          'images': user_images,
                                                          'result_3': result_3,
+                                                         'mess': mess,
                                                          })
 
 
