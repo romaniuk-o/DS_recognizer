@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="​Digital product marketing agency, ​Make your marketing more effective, ​Convert more customers and grow more revenue now, 560k, 79%, 80%, 1340, ​Why you need digital marketing, ​Get Free SEO Analysis?, ​Got New Project?, Read what our customers say">
     <meta name="description" content="">
-    <title>Страница 1</title>
+    <title>AI is here</title>
     <link rel="stylesheet" href="{% static 'css/nicepage.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'css/Страница-1.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}" media="screen">
+    <link rel="shortcut icon" type="image/png" href="{% static 'css/images/favicon.ico' %}">
     <script class="u-script" type="text/javascript" src="{% static 'js/jquery.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'js/nicepage.js' %}" defer=""></script>
     <meta name="generator" content="Nicepage 5.11.4, nicepage.com">
@@ -59,14 +61,17 @@
               <div class="u-sidenav-overflow">
 
                 <div class="u-menu-close"></div>
-<!--                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">-->
-
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>-->
-<!--                </ul>-->
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                    {% if user.is_authenticated %}
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/logout">Logout</a></li>
+                    {% else %}
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/login" >Login</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/signup" >Sign up</a></li>
+                    {% endif %}
+                </ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
@@ -201,9 +206,12 @@ function analyze_image(imageId) {
         </div>
       </div>
     </section>
-    <footer class="u-align-center u-clearfix u-footer u-grey-50 u-footer" id="sec-d4ab" style="background-color: #004080;height: 100px;">
-        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1" style="max-width: 400px; margin: 0 auto; ">
-             <p class="u-small-text u-text u-text-palette-5-light-3 u-text-variant u-text-1">GoIT DS 7 Team 3</p>
+     <footer style="position: relative; height: 100px; ">
+        <div class="color-gradient"></div>
+        <div class="footer-content">
+            <div class="u-clearfix u-sheet u-valign-middle u-sheet-1" style="max-width: 200px; margin: 0 auto; ">
+                <p class="u-small-text u-text u-text-palette-5-light-3 u-text-variant u-text-1">® GoIT DS 7 Team 3,  2023</p>
+            </div>
         </div>
     </footer>
 

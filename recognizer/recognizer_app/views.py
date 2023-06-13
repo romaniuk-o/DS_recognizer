@@ -41,9 +41,16 @@ def load_custom_model():
     if loaded_model is None:
         print('Loading the model ... ')
         url = 'https://drive.google.com/file/d/1MhlLfp43zOLiLnuFzBu3x7d6fIrh7iT5/view?usp=drive_link'
+
+        # For docker
         output = 'recognizer/recognizer_app/src/Xception_tuned.h5'
+        # For local
+        # output = 'recognizer_app/src/Xception_tuned.h5'
         gdown.download(url, output, quiet=False, fuzzy=True)
+        # For docker
         model_path = 'recognizer/recognizer_app/src/Xception_tuned.h5'
+        # For local
+        # model_path = 'recognizer_app/src/Xception_tuned.h5'
         # loaded_model = load_model(model_path)
         loaded_model = tf.keras.models.load_model(model_path, compile=False)
         # Get the last layer of the model
