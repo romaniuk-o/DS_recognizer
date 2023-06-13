@@ -132,3 +132,13 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+
+
+CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+# CSRF_TRUSTED_ORIGINS.append('*')
+CSRF_TRUSTED_ORIGINS.append('https://cifar10.azurewebsites.net/')
+
+ALLOWED_HOSTS =['https://' + os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
+ALLOWED_HOSTS.append('*')
+ALLOWED_HOSTS.append('https://cifar10.azurewebsites.net/')
+

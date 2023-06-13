@@ -79,7 +79,9 @@ def classify(image=None):
         predict_3_index.append(dictionary.get(i, -1))
     result_str = ''
     for i in predict_3_index[::-1]:
-        result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+        if predictions[0][i] >= 0.05:
+            result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+    result_str = result_str[:-2]
     # print(result_str)
     # print(clean_predictions)
     # print(predictions)
