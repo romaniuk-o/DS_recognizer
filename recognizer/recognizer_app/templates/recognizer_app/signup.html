@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <meta name="keywords" content="​Digital product marketing agency, ​Make your marketing more effective, ​Convert more customers and grow more revenue now, 560k, 79%, 80%, 1340, ​Why you need digital marketing, ​Get Free SEO Analysis?, ​Got New Project?, Read what our customers say">
     <meta name="description" content="">
-    <title>Страница 1</title>
+    <title>AI is here</title>
     <link rel="stylesheet" href="{% static 'css/nicepage.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'css/Страница-1.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}" media="screen">
+    <link rel="shortcut icon" type="image/png" href="{% static 'css/images/favicon.ico' %}">
     <script class="u-script" type="text/javascript" src="{% static 'js/jquery.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'js/nicepage.js' %}" defer=""></script>
     <meta name="generator" content="Nicepage 5.11.4, nicepage.com">
@@ -59,14 +61,17 @@
               <div class="u-sidenav-overflow">
 
                 <div class="u-menu-close"></div>
-<!--                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">-->
-
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>-->
-<!--                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>-->
-<!--                </ul>-->
+                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
+                    {% if user.is_authenticated %}
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-6d03">Main</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#sec-0436">Your images</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Страница-1.html#carousel_b998">Our team</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/logout">Logout</a></li>
+                    {% else %}
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/login" >Login</a></li>
+                    <li class="u-nav-item"><a class="u-button-style u-nav-link" href="/signup" >Sign up</a></li>
+                    {% endif %}
+                </ul>
               </div>
             </div>
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
@@ -74,10 +79,10 @@
         </nav>
       </div>
     </header>
-  <section class="u-clearfix u-image u-section-1" id="sec-6d03" data-image-width="250" data-image-height="112">
+  <section class="u-clearfix u-image u-section-1" id="sec-6d03" data-image-width="250" data-image-height="112" style="height: 850px;">
     <div class="u-clearfix u-sheet u-sheet-1" style=" float: right;  margin-right: 150px;">
         <main style="position: relative;">
-             <div style="display: flex; justify-content: flex-end; align-items: flex-start; position: relative; z-index: 2; margin-top: 50px;">
+             <div style="display: flex; justify-content: flex-end; align-items: flex-start; position: relative; z-index: 2; margin-top: 150px;">
                 <div style="order: 1; width: 31%;">
                    <form method="post" enctype="multipart/form-data" style="padding: 20px; background-color: rgba(255, 255, 255, 0); border: 2px solid white; border-radius: 20px;">
                       <div class="container" >
@@ -113,36 +118,12 @@
 </section>
 
 
-
-
-
-    <section class="u-align-center u-clearfix u-palette-5-light-2 u-section-3" id="carousel_b998">
-      <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-default u-text-1">Our team</h2>
-        <div class="u-list u-list-1">
-          <div class="u-repeater u-repeater-1">
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
-                <a href="https://github.com/romaniuk-o" class="u-border-2 u-border-black u-btn u-button-style u-custom-item u-hover-black u-none u-text-hover-white u-btn-1" target="_blank">Oleksandr Romaniuk</a>
-              </div>
+   <footer style="position: relative; height: 100px; ">
+        <div class="color-gradient"></div>
+        <div class="footer-content">
+            <div class="u-clearfix u-sheet u-valign-middle u-sheet-1" style="max-width: 200px; margin: 0 auto; ">
+                <p class="u-small-text u-text u-text-palette-5-light-3 u-text-variant u-text-1">® GoIT DS 7 Team 3,  2023</p>
             </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
-                <a href="https://github.com/Musfer" class="u-border-2 u-border-black u-btn u-button-style u-custom-item u-hover-black u-none u-text-hover-white u-btn-2" target="_blank">Musfer Adzhymambetov</a>
-              </div>
-            </div>
-            <div class="u-container-style u-list-item u-repeater-item">
-              <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
-                <a href="https://github.com/snail911" class="u-border-2 u-border-black u-btn u-button-style u-custom-item u-hover-black u-none u-text-hover-white u-btn-3" target="_blank">Yakiv Klymenko</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-   <footer class="u-align-center u-clearfix u-footer u-grey-50 u-footer" id="sec-d4ab" style="background-color: #004080;height: 100px;">
-        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1" style="max-width: 400px; margin: 0 auto; ">
-             <p class="u-small-text u-text u-text-palette-5-light-3 u-text-variant u-text-1">GoIT DS 7 Team 3</p>
         </div>
     </footer>
     </body>
