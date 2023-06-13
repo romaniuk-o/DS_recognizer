@@ -132,13 +132,12 @@
     return str;
   }
 </script>
+                    {% if mess %}
+                        <p class="error-message" style="color: white; text-align: center; ">{{ mess }}</p>
+                    {% endif %}
   <div style="display: flex; justify-content: center;">
     <div id="resultSection">
-<!--        <h2 style="color: white; font-size: 25px; text-align: center;">-->
-<!--          {% if image_class %}-->
-<!--            Prediction: <br> it's a {{ image_class }} {{ confidence }}-->
-<!--          {% endif %}-->
-<!--        </h2>-->
+
         <h2 style="color: white; font-size: 15px; text-align: center;">
           {% if result_3 %}
              {{ result_3 }}
@@ -151,9 +150,9 @@
         </div>
     </div>
 </div>
-
         </main>
     </div>
+
 </section>
 <section class="u-align-center u-clearfix u-palette-5-light-2 u-section-2" id="sec-0436">
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
