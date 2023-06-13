@@ -68,7 +68,12 @@ def classify(image=None):
 
 
     if not image:
+        print("not image")
         return None
+
+    # image_extensions = ['.jpeg', '.jpg', '.png', '.gif', '.bmp', '.tiff', '.tif', '.webp', '.pbm', '.pgm', '.ppm',
+    #                     '.pnm', '.ico', '.hdr', '.exr', '.svg']
+
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
 
     img = image.convert('RGB')
@@ -77,32 +82,58 @@ def classify(image=None):
     img = np.array(img)
     img = np.expand_dims(img, axis=0)  # Add a batch dimension
     clean_predictions = loaded_model.predict(img)
-    sigmoid_predictions = 1 / (1 + np.exp(-clean_predictions))
-    predictions = np.exp(clean_predictions) / np.sum(np.exp(clean_predictions))
-    predictions2 = predictions.tolist()
-    predict_3 = sorted(predictions2[0])[-5:]
-    index_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    dictionary = dict(zip(predictions2[0], index_list))
-    predict_3_index = []
-    print(predict_3_index)
-    for i in predict_3:
-        predict_3_index.append(dictionary.get(i, -1))
-    result_str = ''
-    for i in predict_3_index[::-1]:
 
-        if predictions[0][i] >= 0.05:
-            result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
-    result_str = result_str[:-2]
+    param_0 = np.array([1.40587545, 1.62797348, 1.44222336, 1.16518291, 1.194156, 1.22925031, 1.24019506, 1.17266833,
+                        1.34761374, 1.47093253])
 
-    # print(result_str)
-    # print(clean_predictions)
-    # print(predictions)
-    # print(sigmoid_predictions)
-    prediction_label = np.argmax(predictions)
-    # prediction = tf.nn.softmax(prediction)
-    percentage = str(int(predictions[0][prediction_label] * 10000) / 100.0)
-    return class_labels[prediction_label], result_str
-    # return 'bird'
+    param_1 = np.array([3.6108333, 3.55082633, 2.67590434, 2.71279497, 3.53879867, 3.3827658, 2.78051644, 3.74128725,
+                        3.69832112, 4.93112212])
+
+    def custom_sigmoid(x, a, b):
+        return 1.0 / (1 + np.exp(-a * (x - b)))
+
+    sigmoid_predictions = custom_sigmoid(clean_predictions, param_0, param_1)
+    sorted_indices = np.argsort(-sigmoid_predictions)[0][:10]
+    # print(sigmoid_predictions[0])
+    # print(sigmoid_predictions[0][sorted_indices])
+    # print(sorted_indices)
+    result_list = []
+    result_str = ""
+    for i in sorted_indices:
+        if sigmoid_predictions[0][i] > 0.01:
+            result_list.append(f"{class_labels[i]}: " +
+                               f"{str(int(sigmoid_predictions[0][i] * 10000) / 100.0)}" + "%")
+    if len(result_list) == 0:
+        result_str = "Sorry, I can't classify your image.\n Maybe there are more than one object one the image"
+    else:
+        result_str = f"My prediction{'s are ' if len(result_list)>1 else ' is '} "+ ", ".join(result_list)
+
+    #     if predictions[0][i] >= 0.05:
+    #         result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+    # result_str = result_str[:-2]
+
+    return result_str
+
+
+    # predict_3 = sorted(sigmoid_predictions[0])[-5:]
+    # index_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    # dictionary = dict(zip(sigmoid_predictions[0], index_list))
+    # predict_3_index = []
+    # print(predict_3_index)
+    # for i in predict_3:
+    #     predict_3_index.append(dictionary.get(i, -1))
+    # result_str = ''
+    # for i in predict_3_index[::-1]:
+    #
+    #     if predictions[0][i] >= 0.05:
+    #         result_str += class_labels[i] + ' - ' + str(int(predictions[0][i] * 10000) / 100.0) +'%, '
+    # result_str = result_str[:-2]
+    #
+    #
+    # prediction_label = np.argmax(predictions)
+    # percentage = str(int(predictions[0][prediction_label] * 10000) / 100.0)
+    # return class_labels[prediction_label], result_str
+    # # return 'bird'
 
 
 
@@ -133,17 +164,21 @@ def analyze_view(request, image_id=-1):
 
 
     image_url = None
-    image_class = None
+    # image_class = None
     result_3 = None
 
     try:
         image = ImageModel.objects.get(id=image_id)
         image_url = image.image.url
+        print(image.image)
+        print(image.image.url)
         image_path = image.image.path
         # print(image_url)
-        image_class,  result_3 = classify(Image.open(image_path))
+        # image_class,  result_3 = classify(Image.open(image_path))
+        result_3 = classify(Image.open(image_path))
         # print(image_class)
     except ObjectDoesNotExist as err:
+        print(err)
         pass
 
 
@@ -158,7 +193,7 @@ def analyze_view(request, image_id=-1):
         form = AnalyzeForm()
 
     return render(request, 'recognizer_app/index.html', {'image_url': image_url,
-                                                         'image_class': image_class,
+                                                         # 'image_class': image_class,
                                                          'images': user_images,
                                                          'result_3': result_3,
                                                          })

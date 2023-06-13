@@ -113,7 +113,8 @@
       const fileExtension = fileName.split('.').pop();
       const maxLength = 15; // Максимальна довжина назви файлу
       const truncatedFileName = truncateString(fileName, maxLength);
-      const truncatedFileNameWithExtension = truncatedFileName + '.' + fileExtension;
+<!--      const truncatedFileNameWithExtension = truncatedFileName + '.' + fileExtension;-->
+      const truncatedFileNameWithExtension = truncatedFileName;
       fileStatusLabel.textContent = "Selected file:";
       fileNameSpan.textContent = truncatedFileNameWithExtension;
     } else {
@@ -133,14 +134,14 @@
 </script>
   <div style="display: flex; justify-content: center;">
     <div id="resultSection">
-        <h2 style="color: white; font-size: 25px; text-align: center;">
-          {% if image_class %}
-            Prediction: <br> it's a {{ image_class }} {{ confidence }}
-          {% endif %}
-        </h2>
+<!--        <h2 style="color: white; font-size: 25px; text-align: center;">-->
+<!--          {% if image_class %}-->
+<!--            Prediction: <br> it's a {{ image_class }} {{ confidence }}-->
+<!--          {% endif %}-->
+<!--        </h2>-->
         <h2 style="color: white; font-size: 15px; text-align: center;">
           {% if result_3 %}
-             Probabilities: {{ result_3 }}
+             {{ result_3 }}
           {% endif %}
         </h2>
         <div id="resultContainer" style="display: flex; justify-content: center;">
