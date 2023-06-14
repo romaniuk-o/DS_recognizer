@@ -98,10 +98,25 @@
     <div style="display: flex; align-items: center;">
       <span id="fileStatusLabel" style="color: white; margin-right: 5px;">File not selected</span>
       <span id="fileNameSpan" style="color: white; max-width: 270px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+
     </div>
+
     <button type="submit" style="background-color: transparent; color: white; border: 2px solid white; padding: 5px 16px; cursor: pointer; border-radius: 10px; width: 270px; height: 40px;">Predict</button>
   </div>
 </form>
+    {% if errors %}
+        <ul>
+            {% for field, error_msgs in errors.items %}
+                {% for error_msg_dict in error_msgs %}
+                    {% for key, error_msg in error_msg_dict.items %}
+                        {% if key == 'message' and error_msg != 'This field is required.' %}
+                            <p class="error-message" style="color: white; text-align: center; margin-right: 25px;">{{ error_msg }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
 <script>
   const fileInput = document.getElementById("fileInput");
   const fileStatusLabel = document.getElementById("fileStatusLabel");
@@ -132,13 +147,12 @@
     return str;
   }
 </script>
+                    {% if mess %}
+                        <p class="error-message" style="color: white; text-align: center; ">{{ mess }}</p>
+                    {% endif %}
   <div style="display: flex; justify-content: center;">
     <div id="resultSection">
-<!--        <h2 style="color: white; font-size: 25px; text-align: center;">-->
-<!--          {% if image_class %}-->
-<!--            Prediction: <br> it's a {{ image_class }} {{ confidence }}-->
-<!--          {% endif %}-->
-<!--        </h2>-->
+
         <h2 style="color: white; font-size: 15px; text-align: center;">
           {% if result_3 %}
              {{ result_3 }}
@@ -151,9 +165,9 @@
         </div>
     </div>
 </div>
-
         </main>
     </div>
+
 </section>
 <section class="u-align-center u-clearfix u-palette-5-light-2 u-section-2" id="sec-0436">
   <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
