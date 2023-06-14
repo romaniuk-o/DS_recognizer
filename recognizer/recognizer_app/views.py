@@ -1,6 +1,6 @@
 import os
 import io
-
+import json
 from pathlib import Path
 
 import gdown
@@ -168,19 +168,20 @@ def analyze_view(request, image_id=-1):
     # image_class = None
     result_3 = None
     mess = None
+    errors = None
 
     try:
         image = ImageModel.objects.get(id=image_id)
         image_url = image.image.url
-        print(image.image)
-        print(image.image.url)
+        # print(image.image)
+        # print(image.image.url)
         image_path = image.image.path
         # print(image_url)
         # image_class,  result_3 = classify(Image.open(image_path))
         result_3 = classify(Image.open(image_path))
         # print(image_class)
     except ObjectDoesNotExist as err:
-        mess = 'This file type is not supported. Try again.'
+        mess = ''
         print(err, mess)
 
         pass
@@ -188,6 +189,14 @@ def analyze_view(request, image_id=-1):
 
     if request.method == 'POST':
         form = AnalyzeForm(request.POST, request.FILES)
+        form_err = form.errors.as_json( escape_html = True)
+        errors = json.loads(form_err)
+                    # if form.is_valid():
+            #     image = form.cleaned_data['image']
+            #     new_image = ImageModel(user=request.user, image=image, title=image.name)
+            #     new_image.save()
+            #     return redirect(f'/analyze/{new_image.id}/')
+            # mess = 'This file type is not supported. Try again.'
         if form.is_valid():
             image = form.cleaned_data['image']
             new_image = ImageModel(user=request.user, image=image, title=image.name)
@@ -201,6 +210,7 @@ def analyze_view(request, image_id=-1):
                                                          'images': user_images,
                                                          'result_3': result_3,
                                                          'mess': mess,
+                                                         'errors': errors,
                                                          })
 
 
