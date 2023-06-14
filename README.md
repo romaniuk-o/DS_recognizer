@@ -56,6 +56,12 @@ The web application was developed using the Django framework, and deployed on th
 <img src="https://assets.intersystems.com/dims4/default/2ef84bc/2147483647/strip/false/crop/473x266+154+0/resize/1200x675!/quality/90/?url=http%3A%2F%2Finter-systems-brightspot.s3.amazonaws.com%2Fe4%2Fe5%2Fc7728ffb4f60964a6e7d089905f0%2Fazure-logo-large.jpg" width="60" height="40"/>
 </a>
 
+
+# Tensorflow model
+
+https://drive.google.com/file/d/1tfzyJL70iaSgqu2JF2vOQ3rDBRixAsPv/view?usp=sharing
+
+
 # Website
 
 https://cifar10recognizer.azurewebsites.net/
