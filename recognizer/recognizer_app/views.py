@@ -77,19 +77,33 @@ def classify(image=None):
 
     class_labels = ['Airplane', 'Automobile', 'Bird', 'Cat', 'Deer', 'Dog', 'Frog', 'Horse', 'Ship', 'Truck']
 
-    img = image.convert('RGB')
-    img = img.resize((32, 32))
+    try:
+        img = image.convert('RGB')
+        # img = img.resize((32, 32))
 
-    img = np.array(img)
-    img = np.expand_dims(img, axis=0)  # Add a batch dimension
-    clean_predictions = loaded_model.predict(img)
+        img = np.array(img)
+        img = np.expand_dims(img, axis=0)  # Add a batch dimension
+        clean_predictions = loaded_model.predict(img)
+    except Exception as err:
+        print(err)
+        img = image.convert('RGB')
+        img = img.resize((32, 32))
 
-    param_0 = np.array([1.40587545, 1.62797348, 1.44222336, 1.16518291, 1.194156, 1.22925031, 1.24019506, 1.17266833,
-                        1.34761374, 1.47093253])
+        img = np.array(img)
+        img = np.expand_dims(img, axis=0)  # Add a batch dimension
+        clean_predictions = loaded_model.predict(img)
 
-    param_1 = np.array([3.6108333, 3.55082633, 2.67590434, 2.71279497, 3.53879867, 3.3827658, 2.78051644, 3.74128725,
-                        3.69832112, 4.93112212])
+    # param_0 = np.array([1.40587545, 1.62797348, 1.44222336, 1.16518291, 1.194156, 1.22925031, 1.24019506, 1.17266833,
+    #                     1.34761374, 1.47093253])
+    #
+    # param_1 = np.array([3.6108333, 3.55082633, 2.67590434, 2.71279497, 3.53879867, 3.3827658, 2.78051644, 3.74128725,
+    #                     3.69832112, 4.93112212])
 
+    param_0 = np.array([1.350902798343926,1.604098186688871,1.487372586762944,1.4245593114217021,1.11647063138921,
+                        1.1752968166724223,1.3050880249428543,1.1973399379334915,1.275995021357589,1.3561731873792415])
+
+    param_1 = np.array([2.0131649192509293,2.2933596623960817,1.1635691730345663,0.9178184385723627,1.5868513101998958,
+                        1.564265064911758,1.0412018766923974,1.8628664506696946,2.0594879005495135,3.391081867066545])
     def custom_sigmoid(x, a, b):
         return 1.0 / (1 + np.exp(-a * (x - b)))
 
